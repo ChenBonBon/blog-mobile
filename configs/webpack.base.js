@@ -1,10 +1,8 @@
 const path = require("path");
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-
 module.exports = {
-  entry: "./src/index.js",
-  mode: isDevelopment ? "development" : "production",
+  entry: path.resolve(__dirname, "../src/index.js"),
+  mode: "production",
   module: {
     rules: [
       {
@@ -18,16 +16,17 @@ module.exports = {
       },
     ],
   },
-  resolve: { extensions: ["*", ".js", "ts", ".jsx", "tsx"] },
+  resolve: {
+    extensions: ["*", ".js", "ts", ".jsx", "tsx"],
+    alias: {
+      "@src": path.resolve(__dirname, "../src"),
+      "@public": path.resolve(__dirname, "../public"),
+    },
+  },
   output: {
-    path: path.resolve(__dirname, "dist/"),
+    path: path.resolve(__dirname, "../dist/"),
     publicPath: "/dist/",
     filename: "bundle.js",
-  },
-  devServer: {
-    port: 3000,
-    hot: true,
-    open: true,
-    historyApiFallback: true,
+    clean: true,
   },
 };
